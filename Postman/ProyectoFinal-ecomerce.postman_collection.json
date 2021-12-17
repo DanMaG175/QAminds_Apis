@@ -1,0 +1,2077 @@
+{
+	"info": {
+		"_postman_id": "2be26d78-57f7-425d-bdb6-06d2384ca364",
+		"name": "ProyectoFinal-ecomerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Obtener categorías",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar status code\", function(){\r",
+							"    pm.response.to.be.status(200);\r",
+							"});\r",
+							"pm.test(\"Validar que el body responde en Json\", function(){\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Validar que la respuesta contenga el header: Date\", () =>{\r",
+							"    pm.response.to.have.header(\"Date\")\r",
+							"});\r",
+							"pm.test(\"En el texto del response incluye 'categories'\", ()=>{\r",
+							"    pm.expect(pm.response.text()).to.contain('categories');\r",
+							"});\r",
+							"pm.test(\"En el texto del response muestra las cinco etiquetas\", ()=>{\r",
+							"    pm.expect(pm.response.text()).to.include('code','icon','label','max_images','region_picker_level');\r",
+							"})\r",
+							"pm.test(\"Validar que el tiempo de respuesta esta abajo de los 400ms\", ()=>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{url_base}}/nga/api/v1/public/categories/insert?lang=es",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"nga",
+						"api",
+						"v1",
+						"public",
+						"categories",
+						"insert"
+					],
+					"query": [
+						{
+							"key": "lang",
+							"value": "es"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Filtrado smartphones cdmx",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar respuesta status 200\", function(){\r",
+							"    pm.response.to.be.status(200);\r",
+							"});\r",
+							"\r",
+							"const jsr = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Body Response contiene información\", ()=>{\r",
+							"    pm.expect(jsr.body).not.null\r",
+							"});\r",
+							"pm.test(\"Existe un campo list_ads\",function(){\r",
+							"    pm.expect(jsr.list_ads).exist;\r",
+							"});\r",
+							"pm.test(\"El campo list_id no es nullo\",function(){\r",
+							"    pm.expect(jsr.list_ads[0].ad.list_id).to.be.not.null;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let encFiltro = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse('{\"region\":\"11\",\"category_lv0\":\"5000\",\"category_lv1\":\"5040\",\"category_lv2\":\"5041\",\"price\":\"2000,3500\",\"lim\":\"28\"}'));\r",
+							"\r",
+							"pm.environment.set(\"encFiltro\",encFiltro);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url_base}}/listing/{{encFiltro}}",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"listing",
+						"{{encFiltro}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Crear usuario random",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//user@mailinator.com\r",
+							"\r",
+							"let numrandom = Math.floor(Math.random() * Math.floor(654321));\r",
+							"\r",
+							"console.log(\"Numero Random, \", numrandom);\r",
+							"\r",
+							"var email = \"Proyecto\" + numrandom + \"@mailinator.com\";  //.concat\r",
+							"var password = numrandom + 1 ;\r",
+							"\r",
+							"console.log( \"Datos: \", email,password)\r",
+							"\r",
+							"pm.environment.set(\"email\", email)\r",
+							"pm.environment.set(\"password\", password)\r",
+							"\r",
+							"const emailFormado = email + ':' + password;\r",
+							"\r",
+							"console.log( \"Email formado: \", emailFormado)\r",
+							"\r",
+							"let encodeKeys = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(emailFormado));\r",
+							"\r",
+							"pm.environment.set(\"encUserRandom\",encodeKeys);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar status code\", ()=>{ \r",
+							"    pm.response.to.have.status(401)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar que el body responde en Json\", function(){\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar que responda el header Content Type\", () =>{\r",
+							"    pm.response.to.have.header(\"Content-type\")\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8')\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json')\r",
+							"});\r",
+							"pm.test(\"El texto corresponde a lo esperado esta dentro de la respuesta\", ()=>{\r",
+							"    pm.expect(pm.response.text()).to.include('ACCOUNT_VERIFICATION_REQUIRED');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar que el tiempo de respuesta esta abajo de los 900ms\", ()=>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "https://www.segundamano.mx/",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{encUserRandom}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"account\":{\"email\":\"{{email}}\"}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url_base}}/nga/api/v1/private/accounts?lang=es",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"nga",
+						"api",
+						"v1",
+						"private",
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "lang",
+							"value": "es"
+						}
+					]
+				},
+				"description": "###Crear usuario en segunda mano\r\n- Se crea el correo y password con números random usando librería math.\r\n- Se ocupa herramienta mailinator para el dominio del correo.\r\n- Se ocupa instrucción para hacer el aplicar un encode al mail y contraseña"
+			},
+			"response": []
+		},
+		{
+			"name": "Post Generar access_token de usuario",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"/* 1. Se requiere un email y password validado para poder acceder a la cuenta*/\r",
+							"/* 2. Se pueden agregar las variables de ambiente email y password en la sección \"Authorization\" para entra a la cuenta*/\r",
+							"/* 3. Se puede utilizar el siguiente script para genera un token encode64 y entrar a la cuenta. No debe tener variables en sección \"Authorization\"*/\r",
+							"/*\r",
+							"let email = pm.environment.get(\"emailValido\");\r",
+							"let pass = pm.environment.get(\"passwordValido\");\r",
+							"   \r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email + ':' + pass));\r",
+							"    \r",
+							"pm.environment.set(\"tokenCuenta\", encode_1);\r",
+							"*/"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar status code\", ()=>{ \r",
+							"    pm.response.to.have.status(200)\r",
+							"});\r",
+							"pm.test(\"Validar que el body responde en Json\", function(){\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Validar que responda el header Content Type\", () =>{\r",
+							"    pm.response.to.have.header(\"Content-type\")\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8')\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json')\r",
+							"});\r",
+							"pm.test(\"En el texto del response se encuentra 'access_token'\", ()=>{\r",
+							"    pm.expect(pm.response.text()).to.include('access_token');\r",
+							"})\r",
+							"pm.test(\"Validar que el tiempo de respuesta esta abajo de los 2000ms\", ()=>{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"/* Para conocer el access_token requerimos una variable donde guardar la respuesta y que se muestre como Json\r",
+							"Obtendremos el access_token de esa variable local y la estableceremos como variable de ambiente\r",
+							"Obtendremos el account_id y lo estableceremos como variable de ambiente\r",
+							"Obtendremos el unic user id, uuid, para establecerlo como variable de ambiente */\r",
+							"const responseJson = pm.response.json();\r",
+							"pm.environment.set(\"access_token\",responseJson.access_token);\r",
+							"pm.environment.set(\"account_id\", responseJson.account.account_id);\r",
+							"pm.environment.set(\"uuid\", responseJson.account.uuid);\r",
+							"    // Podemos verificar los datos obtenidos imprimiendolos en consola\r",
+							"console.log(\"Access Token: \",responseJson.access_token);\r",
+							"console.log(\"AccountID: \", responseJson.account.account_id);\r",
+							"console.log(\"User Unic ID: \",responseJson.account.uuid);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{passwordValido}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{emailValido}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "https://www.segundamano.mx/",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{tokenCuenta}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url_base}}/nga/api/v1/private/accounts?lang=es",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"nga",
+						"api",
+						"v1",
+						"private",
+						"accounts"
+					],
+					"query": [
+						{
+							"key": "lang",
+							"value": "es"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Editar datos de usuario json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar status code\", ()=>{ \r",
+							"    pm.response.to.have.status(200)\r",
+							"});\r",
+							"pm.test(\"Validar que el body responde en Json\", function(){\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Validar que responda el header Content Type\", () =>{\r",
+							"    pm.response.to.have.header(\"Content-type\")\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8')\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json')\r",
+							"});\r",
+							"pm.test(\"En el texto del response muestra las cinco etiquetas\", ()=>{\r",
+							"    pm.expect(pm.response.text()).to.include('account_id','can_publish','email_verified','uuid');\r",
+							"})\r",
+							"const   Jsonresponse = pm.response.json();\r",
+							"pm.test(\"El campo teléfono no esta vacío\", function(){\r",
+							"    pm.expect(Jsonresponse.phone).is.not.null;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"let email = pm.environment.get('emailValido');\r",
+							"let password = pm.environment.get('passwordValido');\r",
+							"\r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email+':'+password));\r",
+							"pm.environment.set(\"tokenCuenta\",encode_1);\r",
+							"\r",
+							"let url = pm.environment.get('url_base');\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://'+url+'/nga/api/v1.1/private/accounts?lang=es',\r",
+							"    method: 'POST',\r",
+							"    header: 'Authorization: Basic ' + encode_1\r",
+							"\r",
+							"}, function(err,res){\r",
+							"    let json_response = res.json()\r",
+							"    let error = err;\r",
+							"\tconsole.log(\"Error de request: \", error)\r",
+							"    pm.environment.set('access_token', json_response.access_token);\r",
+							"    pm.environment.set('uuid', json_response.account.uuid);\r",
+							"}\r",
+							");\r",
+							"\r",
+							"let uuid = pm.environment.get('uuid');\r",
+							"let token = pm.environment.get('access_token');\r",
+							"\r",
+							"let encode_2 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(uuid+':'+token));\r",
+							"pm.environment.set('uuidToken', encode_2);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "https://www.segundamano.mx",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "tag:scmcoord.com,2013:api {{access_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"account\":{\"name\":\"Daniel \",\"phone\":\"8888887898\",\"locations\":[{\"code\":\"17\",\"key\":\"region\",\"label\":\"Estado de México\",\"locations\":[{\"code\":\"699\",\"key\":\"municipality\",\"label\":\"Chalco\"}]}],\"professional\":false,\"phone_hidden\":false}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url_base}}/nga/api/v1{{account_id}}?lang=es",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"nga",
+						"api",
+						"v1{{account_id}}"
+					],
+					"query": [
+						{
+							"key": "lang",
+							"value": "es"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Patch Bad request datos de usuario sin account en body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar status code\", ()=>{ \r",
+							"    pm.response.to.have.status(400)\r",
+							"});\r",
+							"pm.test(\"Validar que el body request contiene información\", function(){\r",
+							"    pm.expect(pm.request.body).to.be.not.null;\r",
+							"});\r",
+							"pm.test(\"Validar existe el header Authorization\", () =>{\r",
+							"    pm.request.to.have.header(\"Authorization\")\r",
+							"    pm.expect(pm.request.headers.get('Authorization')).to.include('tag:scmcoord.com,2013:api')\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let email = pm.environment.get('emailValido');\r",
+							"let password = pm.environment.get('passwordValido');\r",
+							"\r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email+':'+password));\r",
+							"pm.environment.set(\"tokenCuenta\",encode_1);\r",
+							"\r",
+							"let url = pm.environment.get('url_base');\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://'+url+'/nga/api/v1.1/private/accounts?lang=es',\r",
+							"    method: 'POST',\r",
+							"    header: 'Authorization: Basic ' + encode_1\r",
+							"\r",
+							"}, function(err,res){\r",
+							"    let json_response = res.json()\r",
+							"    let error = err;\r",
+							"\tconsole.log(\"Error de request: \", error)\r",
+							"    pm.environment.set('access_token', json_response.access_token);\r",
+							"    pm.environment.set('uuid', json_response.account.uuid);\r",
+							"}\r",
+							");\r",
+							"\r",
+							"let uuid = pm.environment.get('uuid');\r",
+							"let token = pm.environment.get('access_token');\r",
+							"\r",
+							"let encode_2 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(uuid+':'+token));\r",
+							"pm.environment.set('uuidToken', encode_2);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "https://www.segundamano.mx",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "tag:scmcoord.com,2013:api {{access_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{:{\"name\":\"P5 ecomerce\",\"phone\":\"8855123456\",\"professional\":false}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url_base}}/nga/api/v1{{account_id}}?lang=es",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"nga",
+						"api",
+						"v1{{account_id}}"
+					],
+					"query": [
+						{
+							"key": "lang",
+							"value": "es"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Bad request al mandar en blanco el teléfono",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar status code\", ()=>{ \r",
+							"    pm.response.to.have.status(400)\r",
+							"});\r",
+							"pm.test(\"Validar que el body request contiene información\", function(){\r",
+							"    pm.expect(pm.request.body).to.be.not.null;\r",
+							"});\r",
+							"pm.test(\"Validar existe el header Authorization\", () =>{\r",
+							"    pm.request.to.have.header(\"Authorization\")\r",
+							"    pm.expect(pm.request.headers.get('Authorization')).to.include('tag:scmcoord.com,2013:api')\r",
+							"});\r",
+							"pm.test(\"Body response incluye campo code:ERROR_PHONE_TOO_SHORT \", ()=>{\r",
+							"    pm.expect(pm.response.text()).to.include('error','causes','code:ERROR_PHONE_TOO_SHORT','field','label','object');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let email = pm.environment.get('emailValido');\r",
+							"let password = pm.environment.get('passwordValido');\r",
+							"\r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email+':'+password));\r",
+							"pm.environment.set(\"tokenCuenta\",encode_1);\r",
+							"\r",
+							"let url = pm.environment.get('url_base');\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://'+url+'/nga/api/v1.1/private/accounts?lang=es',\r",
+							"    method: 'POST',\r",
+							"    header: 'Authorization: Basic ' + encode_1\r",
+							"\r",
+							"}, function(err,res){\r",
+							"    let json_response = res.json()\r",
+							"    let error = err;\r",
+							"\tconsole.log(\"Error de request: \", error)\r",
+							"    pm.environment.set('access_token', json_response.access_token);\r",
+							"    pm.environment.set('uuid', json_response.account.uuid);\r",
+							"}\r",
+							");\r",
+							"\r",
+							"let uuid = pm.environment.get('uuid');\r",
+							"let token = pm.environment.get('access_token');\r",
+							"\r",
+							"let encode_2 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(uuid+':'+token));\r",
+							"pm.environment.set('uuidToken', encode_2);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true,
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "https://www.segundamano.mx",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "tag:scmcoord.com,2013:api {{access_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"account\":{\"phone_hidden\":false,\"phone\":\"\",\"professional\":false}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url_base}}/nga/api/v1{{account_id}}?lang=es",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"nga",
+						"api",
+						"v1{{account_id}}"
+					],
+					"query": [
+						{
+							"key": "lang",
+							"value": "es"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Consultar monedas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar status code\", ()=>{ \r",
+							"    pm.response.to.have.status(200)\r",
+							"});\r",
+							"pm.test(\"Validar response no está vacío\", ()=>{\r",
+							"    pm.expect(pm.response.body).is.not.null;\r",
+							"});\r",
+							"pm.test(\"Validar el contenido del body es 'unread': 0\",()=>{\r",
+							"    pm.expect(pm.response.text()).to.include('{\"unread\":0}');\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let email = pm.environment.get('emailValido');\r",
+							"let password = pm.environment.get('passwordValido');\r",
+							"\r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email+':'+password));\r",
+							"pm.environment.set(\"tokenCuenta\",encode_1);\r",
+							"\r",
+							"let url = pm.environment.get('url_base');\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://'+url+'/nga/api/v1.1/private/accounts?lang=es',\r",
+							"    method: 'POST',\r",
+							"    header: 'Authorization: Basic ' + encode_1\r",
+							"\r",
+							"}, function(err,res){\r",
+							"    let json_response = res.json()\r",
+							"    let error = err;\r",
+							"\tconsole.log(\"Error de request: \", error)\r",
+							"    pm.environment.set('access_token', json_response.access_token);\r",
+							"    pm.environment.set('uuid', json_response.account.uuid);\r",
+							"}\r",
+							");\r",
+							"\r",
+							"let uuid = pm.environment.get('uuid');\r",
+							"let token = pm.environment.get('access_token');\r",
+							"\r",
+							"let encode_2 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(uuid+':'+token));\r",
+							"pm.environment.set('uuidToken', encode_2);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "https://www.segundamano.mx",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "tag:scmcoord.com,2013:api {{access_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{url_base}}/nga/api/v1/api/users/{{uuid}}/counter?lang=es",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"nga",
+						"api",
+						"v1",
+						"api",
+						"users",
+						"{{uuid}}",
+						"counter"
+					],
+					"query": [
+						{
+							"key": "lang",
+							"value": "es"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Unauthorized al consultar monedas sin Authorization header",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar status code 401\", ()=>{ \r",
+							"    pm.response.to.have.status(401)\r",
+							"});\r",
+							"pm.test(\"Validar que el body request no contiene información\", function(){\r",
+							"    pm.request.body.null;\r",
+							"});\r",
+							"pm.test(\"Validar request no tiene el header Authorization\", () =>{\r",
+							"    pm.request.to.not.have.header('Authorization');\r",
+							"});\r",
+							"pm.test(\"Body response incluye campo code:UNAUTHORIZED \", ()=>{\r",
+							"    pm.expect(pm.response.text()).to.include('error','code:UNAUTHORIZED',);\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let email = pm.environment.get('emailValido');\r",
+							"let password = pm.environment.get('passwordValido');\r",
+							"\r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email+':'+password));\r",
+							"pm.environment.set(\"tokenCuenta\",encode_1);\r",
+							"\r",
+							"let url = pm.environment.get('url_base');\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://'+url+'/nga/api/v1.1/private/accounts?lang=es',\r",
+							"    method: 'POST',\r",
+							"    header: 'Authorization: Basic ' + encode_1\r",
+							"\r",
+							"}, function(err,res){\r",
+							"    let json_response = res.json()\r",
+							"    let error = err;\r",
+							"\tconsole.log(\"Error de request: \", error)\r",
+							"    pm.environment.set('access_token', json_response.access_token);\r",
+							"    pm.environment.set('uuid', json_response.account.uuid);\r",
+							"}\r",
+							");\r",
+							"\r",
+							"let uuid = pm.environment.get('uuid');\r",
+							"let token = pm.environment.get('access_token');\r",
+							"\r",
+							"let encode_2 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(uuid+':'+token));\r",
+							"pm.environment.set('uuidToken', encode_2);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "https://www.segundamano.mx",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{url_base}}/nga/api/v1/api/users/{{uuid}}/counter?lang=es",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"nga",
+						"api",
+						"v1",
+						"api",
+						"users",
+						"{{uuid}}",
+						"counter"
+					],
+					"query": [
+						{
+							"key": "lang",
+							"value": "es"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post para verificar Credenciales",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar código de respuesta 200\",function(){\r",
+							"    pm.response.to.be.status(200);\r",
+							"});\r",
+							"\r",
+							"const jsr = pm.response.json();\r",
+							"pm.test(\"Body Response contiene información\", ()=>{\r",
+							"    pm.expect(jsr.body).is.not.null\r",
+							"});\r",
+							"\r",
+							"let uuid = pm.environment.get(\"uuid\");\r",
+							"pm.test(\"Existen los campos id, xmppJid en el response\",function(){\r",
+							"    pm.expect(jsr.realTimeUser.id).exist;\r",
+							"    pm.expect(jsr.realTimeUser.xmppJid).exist;\r",
+							"});\r",
+							"pm.test(\"El campo id es igual al Unic user id\", function(){\r",
+							"    pm.expect(jsr.realTimeUser.id).to.be.equal(uuid);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let email = pm.environment.get('emailValido');\r",
+							"let password = pm.environment.get('passwordValido');\r",
+							"\r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email+':'+password));\r",
+							"pm.environment.set(\"tokenCuenta\",encode_1);\r",
+							"\r",
+							"let url = pm.environment.get('url_base');\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://'+url+'/nga/api/v1.1/private/accounts?lang=es',\r",
+							"    method: 'POST',\r",
+							"    header: 'Authorization: Basic ' + encode_1\r",
+							"\r",
+							"}, function(err,res){\r",
+							"    let json_response = res.json()\r",
+							"    let error = err;\r",
+							"\tconsole.log(\"Error de request: \", error)\r",
+							"    pm.environment.set('access_token', json_response.access_token);\r",
+							"    pm.environment.set('uuid', json_response.account.uuid);\r",
+							"}\r",
+							");\r",
+							"\r",
+							"let uuid = pm.environment.get('uuid');\r",
+							"let token = pm.environment.get('access_token');\r",
+							"\r",
+							"let encode_2 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(uuid+':'+token));\r",
+							"pm.environment.set('uuidToken', encode_2);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "tag:scmcoord.com,2013:api {{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{url_base}}/nga/api/v1/api/hal/{{uuid}}/realtime/credentials",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"nga",
+						"api",
+						"v1",
+						"api",
+						"hal",
+						"{{uuid}}",
+						"realtime",
+						"credentials"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post crear nueva dirección",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let email = pm.environment.get('emailValido');\r",
+							"let password = pm.environment.get('passwordValido');\r",
+							"\r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email+':'+password));\r",
+							"pm.environment.set(\"tokenCuenta\",encode_1);\r",
+							"\r",
+							"let url = pm.environment.get('url_base');\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://'+url+'/nga/api/v1.1/private/accounts?lang=es',\r",
+							"    method: 'POST',\r",
+							"    header: 'Authorization: Basic ' + encode_1\r",
+							"\r",
+							"}, function(err,res){\r",
+							"    let json_response = res.json()\r",
+							"    let error = err;\r",
+							"\tconsole.log(\"Error de request: \", error)\r",
+							"    pm.environment.set('access_token', json_response.access_token);\r",
+							"    pm.environment.set('uuid', json_response.account.uuid);\r",
+							"}\r",
+							");\r",
+							"\r",
+							"let uuid = pm.environment.get('uuid');\r",
+							"let token = pm.environment.get('access_token');\r",
+							"\r",
+							"let encode_2 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(uuid+':'+token));\r",
+							"pm.environment.set('uuidToken', encode_2);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar código 201 de creado\", function(){\r",
+							"    pm.response.to.be.status(201);\r",
+							"});\r",
+							"pm.test(\"Body Response contiene información\", ()=>{\r",
+							"    pm.expect(pm.response.body).is.not.null\r",
+							"});\r",
+							"pm.test(\"Validar contiene addressID\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"addressID\");\r",
+							"});\r",
+							"    // Colocar idAddres como variable de entorno\r",
+							"var Jsr = pm.response.json()\r",
+							"console.log(\"Id address: \", Jsr.addressID);\r",
+							"pm.environment.set('idAddress',Jsr.addressID);\r",
+							" "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://www.segundamano.mx",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{uuidToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "contact",
+							"value": "Nueva dirección",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "5555123456",
+							"type": "text"
+						},
+						{
+							"key": "rfc",
+							"value": "APDM880101BST",
+							"type": "text"
+						},
+						{
+							"key": "zipCode",
+							"value": "05462",
+							"type": "text"
+						},
+						{
+							"key": "exteriorInfo",
+							"value": "Calle 13",
+							"type": "text"
+						},
+						{
+							"key": "interiorInfo",
+							"value": "2015",
+							"type": "text"
+						},
+						{
+							"key": "region",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "municipality",
+							"value": "36",
+							"type": "text"
+						},
+						{
+							"key": "area",
+							"value": "34854",
+							"type": "text"
+						},
+						{
+							"key": "alias",
+							"value": "Apis Direccion",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{url_base}}/addresses/v1/create",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"addresses",
+						"v1",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ver direcciones",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Validar código de estatus como 200\", function(){\r",
+							"    pm.response.to.be.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar Body response no es nulo\", function(){\r",
+							"    pm.expect(pm.response.body).is.not.null;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"exteriorInfo\", \"interiorInfo\", \"region\", \"municipality\", \"area\",\"alias\", \"contact\", \"phone\", \"zipCode\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let email = pm.environment.get('emailValido');\r",
+							"let password = pm.environment.get('passwordValido');\r",
+							"\r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email+':'+password));\r",
+							"pm.environment.set(\"tokenCuenta\",encode_1);\r",
+							"\r",
+							"let url = pm.environment.get('url_base');\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://'+url+'/nga/api/v1.1/private/accounts?lang=es',\r",
+							"    method: 'POST',\r",
+							"    header: 'Authorization: Basic ' + encode_1\r",
+							"\r",
+							"}, function(err,res){\r",
+							"    let json_response = res.json()\r",
+							"    let error = err;\r",
+							"\tconsole.log(\"Error de request: \", error)\r",
+							"    pm.environment.set('access_token', json_response.access_token);\r",
+							"    pm.environment.set('uuid', json_response.account.uuid);\r",
+							"}\r",
+							");\r",
+							"\r",
+							"let uuid = pm.environment.get('uuid');\r",
+							"let token = pm.environment.get('access_token');\r",
+							"\r",
+							"let encode_2 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(uuid+':'+token));\r",
+							"pm.environment.set('uuidToken', encode_2);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "https://www.segundamano.mx",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{uuidToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{url_base}}/addresses/v1/get",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"addresses",
+						"v1",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Borra Dirección",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let email = pm.environment.get('emailValido');\r",
+							"let password = pm.environment.get('passwordValido');\r",
+							"\r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email+':'+password));\r",
+							"pm.environment.set(\"tokenCuenta\",encode_1);\r",
+							"\r",
+							"let url = pm.environment.get('url_base');\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://'+url+'/nga/api/v1.1/private/accounts?lang=es',\r",
+							"    method: 'POST',\r",
+							"    header: 'Authorization: Basic ' + encode_1\r",
+							"\r",
+							"}, function(err,res){\r",
+							"    let json_response = res.json()\r",
+							"    let error = err;\r",
+							"\tconsole.log(\"Error de request: \", error)\r",
+							"    pm.environment.set('access_token', json_response.access_token);\r",
+							"    pm.environment.set('uuid', json_response.account.uuid);\r",
+							"}\r",
+							");\r",
+							"\r",
+							"let uuid = pm.environment.get('uuid');\r",
+							"let token = pm.environment.get('access_token');\r",
+							"\r",
+							"let encode_2 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(uuid+':'+token));\r",
+							"pm.environment.set('uuidToken', encode_2);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar status code\", ()=>{ \r",
+							"    pm.response.to.have.status(200)\r",
+							"});\r",
+							"pm.test(\"Validar que el body responde en Json\", ()=>{\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Hay contenido en el response\", ()=>{\r",
+							"    pm.expect(pm.response).is.not.null;\r",
+							"});\r",
+							"pm.test(\"El texto del response contiene message y deleted correctly\",()=>{\r",
+							"    pm.expect(pm.response.text()).to.include(\"message\",\"deleted correctly\");\r",
+							"});\r",
+							" "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{uuidToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{url_base}}/addresses/v1/delete/{{idAddress}}",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"addresses",
+						"v1",
+						"delete",
+						"{{idAddress}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Ver direcciones método no permitido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validar estatus correcto\r",
+							"pm.test(\"Validar código de estatus como 405\", function(){\r",
+							"    pm.response.to.be.status(405);\r",
+							"});\r",
+							"// Validar body contiene información \r",
+							"pm.test(\"Validar Body response no es nulo\", function(){\r",
+							"    pm.expect(pm.response.body).not.null;\r",
+							"});\r",
+							"// Validar existe exteriorInfo\r",
+							"pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+							"    pm.expect(pm.response.text()).to.eql(\"Method Not Allowed\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let email = pm.environment.get('emailValido');\r",
+							"let password = pm.environment.get('passwordValido');\r",
+							"\r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email+':'+password));\r",
+							"pm.environment.set(\"tokenCuenta\",encode_1);\r",
+							"\r",
+							"let url = pm.environment.get('url_base');\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://'+url+'/nga/api/v1.1/private/accounts?lang=es',\r",
+							"    method: 'POST',\r",
+							"    header: 'Authorization: Basic ' + encode_1\r",
+							"\r",
+							"}, function(err,res){\r",
+							"    let json_response = res.json()\r",
+							"    let error = err;\r",
+							"\tconsole.log(\"Error de request: \", error)\r",
+							"    pm.environment.set('access_token', json_response.access_token);\r",
+							"    pm.environment.set('uuid', json_response.account.uuid);\r",
+							"}\r",
+							");\r",
+							"\r",
+							"let uuid = pm.environment.get('uuid');\r",
+							"let token = pm.environment.get('access_token');\r",
+							"\r",
+							"let encode_2 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(uuid+':'+token));\r",
+							"pm.environment.set('uuidToken', encode_2);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "https://www.segundamano.mx",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{anunToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{url_base}}/addresses/v1/get",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"addresses",
+						"v1",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post crear anuncio",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let email = pm.environment.get('emailValido');\r",
+							"let password = pm.environment.get('passwordValido');\r",
+							"\r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email+':'+password));\r",
+							"pm.environment.set(\"tokenCuenta\",encode_1);\r",
+							"\r",
+							"let url = pm.environment.get('url_base');\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://'+url+'/nga/api/v1.1/private/accounts?lang=es',\r",
+							"    method: 'POST',\r",
+							"    header: 'Authorization: Basic ' + encode_1\r",
+							"\r",
+							"}, function(err,res){\r",
+							"    let json_response = res.json()\r",
+							"    let error = err;\r",
+							"\tconsole.log(\"Error de request: \", error)\r",
+							"    pm.environment.set('access_token', json_response.access_token);\r",
+							"    pm.environment.set('uuid', json_response.account.uuid);\r",
+							"}\r",
+							");\r",
+							"\r",
+							"let uuid = pm.environment.get('uuid');\r",
+							"let token = pm.environment.get('access_token');\r",
+							"\r",
+							"let encode_2 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(uuid+':'+token));\r",
+							"pm.environment.set('uuidToken', encode_2);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Verificar que manda código de status correcto\r",
+							"pm.test(\"Validar código 201 de creado\", function(){\r",
+							"    pm.response.to.be.status(200);\r",
+							"});\r",
+							"// Validar que hay información en Body de respuesta (no esta vacío)\r",
+							"pm.test(\"Body Response contiene información\", ()=>{\r",
+							"    pm.expect(pm.response.body).is.not.null\r",
+							"});\r",
+							"pm.test(\"Contiene un id de anuncio\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"ad_id\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://www.segundamano.mx",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{uuidToken}}",
+						"type": "text"
+					},
+					{
+						"key": "X-Source",
+						"value": "PHOENIX_DESKTOP",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"category\":\"8082\",\"subject\":\"PC laptop Reparación\",\"body\":\"Se revisa y repara todo tipo de equipo\",\"price\":\"500\",\"region\":\"17\",\"municipality\":\"699\",\"area\":\"177439\",\"phone_hidden\":\"false\",\"show_phone\":\"true\",\"contact_phone\":\"8855123456\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url_base}}/v2/accounts/{{uuid}}/up",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"v2",
+						"accounts",
+						"{{uuid}}",
+						"up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ver anuncios pendientes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar status de respuesta 200\",function(){\r",
+							"    pm.response.to.be.ok;\r",
+							"});\r",
+							"\r",
+							"const jsr = pm.response.json();\r",
+							"pm.test(\"Body Response contiene información\", ()=>{\r",
+							"    pm.expect(jsr.body).is.not.null\r",
+							"});\r",
+							"pm.test(\"Existen los campos counter_map,all,pending\",function(){\r",
+							"    pm.expect(jsr.counter_map).exist;\r",
+							"    pm.expect(jsr.counter_map.all).exist;\r",
+							"    pm.expect(jsr.counter_map.pending).exist;\r",
+							"});\r",
+							"pm.test(\"existe campo ad\",function(){\r",
+							"    pm.expect(jsr.private_ads[0].ad.ad_id).exist;\r",
+							"});\r",
+							"pm.test(\"existe campo ad\",function(){\r",
+							"    const pend = jsr.counter_map.pending;\r",
+							"    if(jsr.counter_map.pending >=1){\r",
+							"        console.log(\"pend: \",pend);\r",
+							"        for(i=0; i < pend; i++){\r",
+							"            console.log(\"ad_id: \",jsr.private_ads[i].ad.ad_id);\r",
+							"            pm.expect(jsr.private_ads[i].ad.ad_id).exist;\r",
+							"        }\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let email = pm.environment.get('emailValido');\r",
+							"let password = pm.environment.get('passwordValido');\r",
+							"\r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email+':'+password));\r",
+							"pm.environment.set(\"tokenCuenta\",encode_1);\r",
+							"\r",
+							"let url = pm.environment.get('url_base');\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://'+url+'/nga/api/v1.1/private/accounts?lang=es',\r",
+							"    method: 'POST',\r",
+							"    header: 'Authorization: Basic ' + encode_1\r",
+							"\r",
+							"}, function(err,res){\r",
+							"    let json_response = res.json()\r",
+							"    let error = err;\r",
+							"\tconsole.log(\"Error de request: \", error)\r",
+							"    pm.environment.set('access_token', json_response.access_token);\r",
+							"    pm.environment.set('uuid', json_response.account.uuid);\r",
+							"}\r",
+							");\r",
+							"\r",
+							"let uuid = pm.environment.get('uuid');\r",
+							"let token = pm.environment.get('access_token');\r",
+							"\r",
+							"let encode_2 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(uuid+':'+token));\r",
+							"pm.environment.set('uuidToken', encode_2);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://www.segundamano.mx",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "tag:scmcoord.com,2013:api {{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{url_base}}/nga/api/v1/{{account_id}}/klfst?status=pending",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"nga",
+						"api",
+						"v1",
+						"{{account_id}}",
+						"klfst"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "pending"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Recomendar precio carro",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar código de respuesta 200\",function(){\r",
+							"    pm.response.to.be.status(200);\r",
+							"});\r",
+							"\r",
+							"const jsr = pm.response.json();\r",
+							"pm.test(\"Body Response contiene información\", ()=>{\r",
+							"    pm.expect(jsr.body).is.not.null\r",
+							"});\r",
+							"console.log(\"response: \",jsr.data.minimum);\r",
+							"\r",
+							"pm.test(\"Existen los campos minimum,maximum,recommended en el response\",function(){\r",
+							"    pm.expect(jsr.data.minimum).exist;\r",
+							"    pm.expect(jsr.data.maximum).exist;\r",
+							"    pm.expect(jsr.data.recommended).exist;\r",
+							"});\r",
+							"pm.test(\"Los campos minimum,maximum,recommended contienen información\",function(){\r",
+							"    pm.expect(jsr.data.minimum).not.null;\r",
+							"    pm.expect(jsr.data.maximum).not.null;\r",
+							"    pm.expect(jsr.data.recommended).not.null;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://www.segundamano.mx",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"category\":\"2021\",\"price\":\"0\",\"carbrand\":\"115\",\"carmodel\":\"11509\",\"regdate\":\"2020\",\"mileage\":\"100000\",\"gearbox\":\"1\",\"fuel\":\"1\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url_base}}/price-recommender/v1/public/recommend/",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"price-recommender",
+						"v1",
+						"public",
+						"recommend",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Agregar artículo a favorito",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let email = pm.environment.get('emailValido');\r",
+							"let password = pm.environment.get('passwordValido');\r",
+							"\r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email+':'+password));\r",
+							"pm.environment.set(\"tokenCuenta\",encode_1);\r",
+							"\r",
+							"let url = pm.environment.get('url_base');\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://'+url+'/nga/api/v1.1/private/accounts?lang=es',\r",
+							"    method: 'POST',\r",
+							"    header: 'Authorization: Basic ' + encode_1\r",
+							"\r",
+							"}, function(err,res){\r",
+							"    let json_response = res.json()\r",
+							"    let error = err;\r",
+							"\tconsole.log(\"Error de request: \", error)\r",
+							"    pm.environment.set('access_token', json_response.access_token);\r",
+							"    pm.environment.set('uuid', json_response.account.uuid);\r",
+							"}\r",
+							");\r",
+							"\r",
+							"let uuid = pm.environment.get('uuid');\r",
+							"let token = pm.environment.get('access_token');\r",
+							"\r",
+							"let encode_2 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(uuid+':'+token));\r",
+							"pm.environment.set('uuidToken', encode_2);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Verificar que manda código de status correcto\r",
+							"pm.test(\"Validar código 200\", function(){\r",
+							"    pm.response.to.be.status(200);\r",
+							"});\r",
+							"var jsr = pm.response.json();\r",
+							"// Validar que hay información en Body de respuesta (no esta vacío)\r",
+							"pm.test(\"Body Response contiene información\", ()=>{\r",
+							"    pm.expect(jsr.body).not.null\r",
+							"});\r",
+							"// Validar que la respuesta contiene campo addressID\r",
+							"pm.test(\"Validar respuesta contiene campo data\", function(){\r",
+							"    pm.expect(jsr.data).exist;\r",
+							"});\r",
+							"\r",
+							"console.log(\"added \", jsr.added);\r",
+							"pm.environment.set('Favorito 0',jsr.data.added[0]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://www.segundamano.mx",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{uuidToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"list_ids\":[937457860,937457863]}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url_base}}/favorites/v1/private/accounts/{{uuid}}",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"favorites",
+						"v1",
+						"private",
+						"accounts",
+						"{{uuid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Obtener Favoritos códigos",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let email = pm.environment.get('emailValido');\r",
+							"let password = pm.environment.get('passwordValido');\r",
+							"\r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email+':'+password));\r",
+							"pm.environment.set(\"tokenCuenta\",encode_1);\r",
+							"\r",
+							"let url = pm.environment.get('url_base');\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://'+url+'/nga/api/v1.1/private/accounts?lang=es',\r",
+							"    method: 'POST',\r",
+							"    header: 'Authorization: Basic ' + encode_1\r",
+							"\r",
+							"}, function(err,res){\r",
+							"    let json_response = res.json()\r",
+							"    let error = err;\r",
+							"\tconsole.log(\"Error de request: \", error)\r",
+							"    pm.environment.set('access_token', json_response.access_token);\r",
+							"    pm.environment.set('uuid', json_response.account.uuid);\r",
+							"}\r",
+							");\r",
+							"\r",
+							"let uuid = pm.environment.get('uuid');\r",
+							"let token = pm.environment.get('access_token');\r",
+							"\r",
+							"let encode_2 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(uuid+':'+token));\r",
+							"pm.environment.set('uuidToken', encode_2);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Verificar que manda código de status correcto\r",
+							"pm.test(\"Validar código 200\", function(){\r",
+							"    pm.response.to.be.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsr = pm.response.json();\r",
+							"// Validar que hay información en Body de respuesta (no esta vacío)\r",
+							"pm.test(\"Body Response contiene información\", ()=>{\r",
+							"    pm.expect(jsr.body).not.null\r",
+							"});\r",
+							"// Validar que la respuesta contiene campo addressID\r",
+							"pm.test(\"Validar contiene campos name, list_ids\", function(){\r",
+							"    pm.expect(jsr.data.name).exist;\r",
+							"    pm.expect(jsr.data.list_ids).exist;\r",
+							"});\r",
+							"\r",
+							"console.log(\"Id address: \", jsr.addressID);\r",
+							"pm.environment.set('Favorito 0',jsr.data.list_ids[0]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{uuidToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{url_base}}/favorites/v1/private/accounts/{{uuid}}",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"favorites",
+						"v1",
+						"private",
+						"accounts",
+						"{{uuid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Cambiar password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validar status code\", ()=>{ \r",
+							"    pm.response.to.have.status(200)\r",
+							"});\r",
+							"pm.test(\"Validar que el body responde en Json\", function(){\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Validar que responda el header Content Type\", () =>{\r",
+							"    pm.response.to.have.header(\"Content-type\")\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8')\r",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json')\r",
+							"});\r",
+							"pm.test(\"En el texto del response muestra las cinco etiquetas\", ()=>{\r",
+							"    pm.expect(pm.response.text()).to.include('account_id','can_publish','email_verified','uuid');\r",
+							"})\r",
+							"const   Jsr = pm.response.json();\r",
+							"pm.test(\"El campo teléfono no esta vacío\", function(){\r",
+							"    pm.expect(Jsr.phone).is.not.null;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let email = pm.environment.get('emailValido');\r",
+							"let password = pm.environment.get('passwordValido');\r",
+							"\r",
+							"let encode_1 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(email+':'+password));\r",
+							"pm.environment.set(\"tokenCuenta\",encode_1);\r",
+							"\r",
+							"let url = pm.environment.get('url_base');\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: 'https://'+url+'/nga/api/v1.1/private/accounts?lang=es',\r",
+							"    method: 'POST',\r",
+							"    header: 'Authorization: Basic ' + encode_1\r",
+							"\r",
+							"}, function(err,res){\r",
+							"    let json_response = res.json()\r",
+							"    let error = err;\r",
+							"\tconsole.log(\"Error de request: \", error)\r",
+							"    pm.environment.set('access_token', json_response.access_token);\r",
+							"    pm.environment.set('uuid', json_response.account.uuid);\r",
+							"}\r",
+							");\r",
+							"\r",
+							"let uuid = pm.environment.get('uuid');\r",
+							"let token = pm.environment.get('access_token');\r",
+							"\r",
+							"let encode_2 = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(uuid+':'+token));\r",
+							"pm.environment.set('uuidToken', encode_2);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "https://www.segundamano.mx",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "tag:scmcoord.com,2013:api {{access_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"account\":{\"password\":\"DanApiqa\"}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url_base}}/nga/api/v1{{account_id}}?lang=es",
+					"protocol": "https",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"nga",
+						"api",
+						"v1{{account_id}}"
+					],
+					"query": [
+						{
+							"key": "lang",
+							"value": "es"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
