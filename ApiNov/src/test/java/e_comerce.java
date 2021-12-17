@@ -113,7 +113,6 @@ public class e_comerce {
         Response resp = given()
                 .log().all()
                 .header("Authorization","tag:scmcoord.com,2013:api " + access_token)
-
                 .header("Content-Type","application/json")
                 .header("Origin","https://www.segundamano.mx")
                 .body(body2)

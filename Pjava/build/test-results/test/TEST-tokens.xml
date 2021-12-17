@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tokens" tests="2" skipped="0" failures="0" errors="0" timestamp="2021-12-17T21:00:59" hostname="XME4863-LAP" time="3.744">
+  <properties/>
+  <testcase name="t04_obtener_access_token_con_Basic_Auth_email_pass" classname="tokens" time="3.464"/>
+  <testcase name="t19_obtener_articulo_a_favorito" classname="tokens" time="0.28"/>
+  <system-out><![CDATA[Request method:	POST
+Request URI:	https://webapi.segundamano.mx/nga/api/v1.1/private/accounts?lang=es
+Proxy:			<none>
+Request params:	<none>
+Query params:	lang=es
+Form params:	<none>
+Path params:	<none>
+Headers:		Authorization=Basic ZGFubWdhcGlAbWFpbGluYXRvci5jb206RGFuQXBpcWE=
+				Accept=*/*
+				Content-Type=application/x-www-form-urlencoded; charset=ISO-8859-1
+Cookies:		<none>
+Multiparts:		<none>
+Body:			<none>
+Body response: {"access_token":"mc1x81dfaed9996b709dc10c4389176d3adbf70750e2_v2","account":{"account_id":"/private/accounts/11515171","can_publish":true,"email":"danmgapi@mailinator.com","email_verified":true,"locations":[],"name":"Project intelliJ","phone":"5589562374","phone_hidden":false,"professional":false,"rfc":"","uuid":"cc0eb357-cd82-459e-8550-12eb999ea7bf"},"ad_events":{"24h":{"calls":0,"mails":0,"phone_views":0,"views":0},"7d":{"calls":0,"mails":0,"phone_views":0,"views":0},"total":{"calls":0,"mails":0,"phone_views":0,"views":0}},"token_type":"tag:scmcoord.com,2013:api"}
+token: mc1x81dfaed9996b709dc10c4389176d3adbf70750e2_v2
+account_id: /private/accounts/11515171
+uuid: cc0eb357-cd82-459e-8550-12eb999ea7bf
+Request method:	GET
+Request URI:	https://webapi.segundamano.mx/favorites/v1/private/accounts/cc0eb357-cd82-459e-8550-12eb999ea7bf
+Proxy:			<none>
+Request params:	<none>
+Query params:	<none>
+Form params:	<none>
+Path params:	<none>
+Headers:		Authorization=Basic Y2MwZWIzNTctY2Q4Mi00NTllLTg1NTAtMTJlYjk5OWVhN2JmOm1jMXg4MWRmYWVkOTk5NmI3MDlkYzEwYzQzODkxNzZkM2FkYmY3MDc1MGUyX3Yy
+				Accept=*/*
+Cookies:		<none>
+Multiparts:		<none>
+Body:			<none>
+Body response: {"data":{"name":"Favoritos","list_ids":[937457787,937457786,937457860,937457863]}}
+
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
