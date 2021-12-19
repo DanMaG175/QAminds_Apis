@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "d1d9896b-7f5e-4393-80c2-f5ad65c3dfaf",
+		"name": "Práctica 2 - Curl y postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get statuspage python",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://2p66nmmycsj3.statuspage.io/api/v2/status.json",
+					"protocol": "https",
+					"host": [
+						"2p66nmmycsj3",
+						"statuspage",
+						"io"
+					],
+					"path": [
+						"api",
+						"v2",
+						"status.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get My domain no",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\" : \"Hello world\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://myDomain.com/firstPage.jsp",
+					"protocol": "https",
+					"host": [
+						"myDomain",
+						"com"
+					],
+					"path": [
+						"firstPage.jsp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get api google no params",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://apis.google.com/js/api.js",
+					"protocol": "https",
+					"host": [
+						"apis",
+						"google",
+						"com"
+					],
+					"path": [
+						"js",
+						"api.js"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ogs google headers",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"user-agent": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Referer",
+						"value": "https://ogs.google.com/",
+						"type": "text"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36",
+						"type": "text"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://apis.google.com/js/api.js",
+					"protocol": "https",
+					"host": [
+						"apis",
+						"google",
+						"com"
+					],
+					"path": [
+						"js",
+						"api.js"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get api stripe -u",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "sk_test_4eC39HqLyjWDarjtT1zdp7dc:",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.stripe.com/v1/customers/cus_H6vP355p31T4gn",
+					"protocol": "https",
+					"host": [
+						"api",
+						"stripe",
+						"com"
+					],
+					"path": [
+						"v1",
+						"customers",
+						"cus_H6vP355p31T4gn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get giphy api profile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://giphy.com/api/v1/users/profile/",
+					"protocol": "https",
+					"host": [
+						"giphy",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"profile",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get respuesta en json",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://2p66nmmycsj3.statuspage.io/api/v2/status.json",
+					"protocol": "https",
+					"host": [
+						"2p66nmmycsj3",
+						"statuspage",
+						"io"
+					],
+					"path": [
+						"api",
+						"v2",
+						"status.json"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

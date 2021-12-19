@@ -1,0 +1,610 @@
+{
+	"info": {
+		"_postman_id": "b1f83917-a1dc-43d9-aa50-f37d8b6668ff",
+		"name": "Práctica 3 - Covid19-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get México",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const respuestaJson = pm.response.json();\r",
+							"console.log(\"Respuesta: \", pm.response)\r",
+							"console.log(\"Cuerpo de respuesta\", pm.response.body)\r",
+							"console.log(\"Body response en texto\", pm.response.text())\r",
+							"console.log(\"Body response en json\", pm.response.json())\r",
+							"console.log(\"Código de Respuesta\", pm.response.code)\r",
+							"console.log(\"Tiempo de respuesta\", pm.response.responseTime)\r",
+							"console.log(\"Tamaños de respuesta\", pm.response.size)\r",
+							"console.log(\"Cabezera: \", pm.response.headers)\r",
+							"\r",
+							"pm.test(\"Validar los datos en los campos\", ()=>{\r",
+							"    //Primero se colocó aquí el variable\r",
+							"    //const respuestaJson = pm.response.json();\r",
+							"\r",
+							"    console.log(\"Imprimir el paìs: \", respuestaJson[0].country);\r",
+							"    console.log(\"Imprimir el paìs: \", respuestaJson[0].code);\r",
+							"    console.log(\"Imprimir el paìs: \", respuestaJson[0].confirmed);\r",
+							"    \r",
+							"    pm.expect(respuestaJson[0].country).to.eql(\"Mexico\");\r",
+							"    pm.expect(respuestaJson[0].country).to.a(\"string\");\r",
+							"    pm.expect(respuestaJson[0].confirmed).to.be.a(\"number\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar el texto'recovered' esta dentro de la respuesta\", ()=>{\r",
+							"    pm.expect(pm.response.text()).to.include(\"recovered\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar el texto'country' es texto\", ()=>{\r",
+							"    pm.expect(respuestaJson[0].country).to.a(\"string\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar el texto'confirmed' esta dentro de la respuesta\", ()=>{\r",
+							"    pm.expect(respuestaJson[0].confirmed).to.a(\"number\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://covid19-api.com/country?name=Mexico&format=json",
+					"protocol": "https",
+					"host": [
+						"covid19-api",
+						"com"
+					],
+					"path": [
+						"country"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Mexico"
+						},
+						{
+							"key": "format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get todos los paises",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validar que el status sea 200 de ok.\r",
+							"pm.test(\"test status code is 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Validar que el status es ok.\r",
+							"pm.test(\"test status code is ok\", function(){\r",
+							"    pm.response.to.be.ok;\r",
+							"});\r",
+							"pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"country\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://covid19-api.com/country/all?format=json",
+					"protocol": "https",
+					"host": [
+						"covid19-api",
+						"com"
+					],
+					"path": [
+						"country",
+						"all"
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get por código de país",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validar que el status sea 200 de ok.\r",
+							"pm.test(\"test status code is 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Validar que el status es ok.\r",
+							"pm.test(\"test status code is ok\", function(){\r",
+							"    pm.response.to.be.ok;\r",
+							"});\r",
+							"pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"country\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://covid19-api.com/country/code?code=MX&format=json",
+					"protocol": "https",
+					"host": [
+						"covid19-api",
+						"com"
+					],
+					"path": [
+						"country",
+						"code"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "MX"
+						},
+						{
+							"key": "format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get reporte todos por fecha",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validar que el status sea 200 de ok.\r",
+							"pm.test(\"test status code is 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Validar que el status es ok.\r",
+							"pm.test(\"test status code is ok\", function(){\r",
+							"    pm.response.to.be.ok;\r",
+							"});\r",
+							"pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"country\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://covid19-api.com/report/country/all?date=2020-06-01&date-format=YYYY-MM-DD&format=json",
+					"protocol": "https",
+					"host": [
+						"covid19-api",
+						"com"
+					],
+					"path": [
+						"report",
+						"country",
+						"all"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2020-06-01"
+						},
+						{
+							"key": "date-format",
+							"value": "YYYY-MM-DD"
+						},
+						{
+							"key": "format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Reporte por código US y fecha",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validar que el status sea 200 de ok.\r",
+							"pm.test(\"test status code is 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Validar que el status es ok.\r",
+							"pm.test(\"test status code is ok\", function(){\r",
+							"    pm.response.to.be.ok;\r",
+							"});\r",
+							"pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"country\",\"provinces\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://covid19-api.com/report/country/code?code=US&date=2020-06-01&date-format=YYYY-MM-DD&format=json",
+					"protocol": "https",
+					"host": [
+						"covid19-api",
+						"com"
+					],
+					"path": [
+						"report",
+						"country",
+						"code"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "US"
+						},
+						{
+							"key": "date",
+							"value": "2020-06-01"
+						},
+						{
+							"key": "date-format",
+							"value": "YYYY-MM-DD"
+						},
+						{
+							"key": "format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Reporte por nombre USA y fecha",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validar que el status sea 200 de ok.\r",
+							"pm.test(\"test status code is 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Validar que el status es ok.\r",
+							"pm.test(\"test status code is ok\", function(){\r",
+							"    pm.response.to.be.ok;\r",
+							"});\r",
+							"pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"country\",\"provinces\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://covid19-api.com/report/country/name?name=USA&date=2020-06-01&date-format=YYYY-MM-DD&format=json",
+					"protocol": "https",
+					"host": [
+						"covid19-api",
+						"com"
+					],
+					"path": [
+						"report",
+						"country",
+						"name"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "USA"
+						},
+						{
+							"key": "date",
+							"value": "2020-06-01"
+						},
+						{
+							"key": "date-format",
+							"value": "YYYY-MM-DD"
+						},
+						{
+							"key": "format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get pais no existe con error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const respuestaJson = pm.response.json();\r",
+							"console.log(\"Respuesta: \", pm.response)\r",
+							"console.log(\"Cuerpo de respuesta\", pm.response.body)\r",
+							"console.log(\"Body response en texto\", pm.response.text())\r",
+							"console.log(\"Body response en json\", pm.response.json())\r",
+							"console.log(\"Código de Respuesta\", pm.response.code)\r",
+							"console.log(\"Tiempo de respuesta\", pm.response.responseTime)\r",
+							"console.log(\"Tamaños de respuesta\", pm.response.size)\r",
+							"console.log(\"Cabezera: \", pm.response.headers)\r",
+							"\r",
+							"pm.test(\"Validar los datos en los campos\", ()=>{\r",
+							"    //Primero se colocó aquí el variable\r",
+							"    //const respuestaJson = pm.response.json();\r",
+							"\r",
+							"    console.log(\"Imprimir el paìs: \", respuestaJson[0].country);\r",
+							"    console.log(\"Imprimir el paìs: \", respuestaJson[0].code);\r",
+							"    console.log(\"Imprimir el paìs: \", respuestaJson[0].confirmed);\r",
+							"    \r",
+							"    pm.expect(respuestaJson[0].country).to.eql(\"Mexico\");\r",
+							"    pm.expect(respuestaJson[0].country).to.a(\"string\");\r",
+							"    pm.expect(respuestaJson[0].confirmed).to.be.a(\"number\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar el texto'recovered' esta dentro de la respuesta\", ()=>{\r",
+							"    pm.expect(pm.response.text()).to.include(\"recovered\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar el texto'country' es texto\", ()=>{\r",
+							"    pm.expect(respuestaJson[0].country).to.a(\"string\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar el texto'confirmed' esta dentro de la respuesta\", ()=>{\r",
+							"    pm.expect(respuestaJson[0].confirmed).to.a(\"number\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://covid19-api.com/country?name=otroPais",
+					"protocol": "https",
+					"host": [
+						"covid19-api",
+						"com"
+					],
+					"path": [
+						"country"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "otroPais"
+						},
+						{
+							"key": "format",
+							"value": "json ",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get obtener Totales",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const respuestaJson = pm.response.json();\r",
+							"console.log(\"Respuesta: \", pm.response)\r",
+							"console.log(\"Cuerpo de respuesta\", pm.response.body)\r",
+							"console.log(\"Body response en texto\", pm.response.text())\r",
+							"console.log(\"Body response en json\", pm.response.json())\r",
+							"console.log(\"Código de Respuesta\", pm.response.code)\r",
+							"console.log(\"Tiempo de respuesta\", pm.response.responseTime)\r",
+							"console.log(\"Tamaños de respuesta\", pm.response.size)\r",
+							"console.log(\"Cabezera: \", pm.response.headers)\r",
+							"\r",
+							"pm.test(\"Validar los datos en los campos\", ()=>{\r",
+							"    //Primero se colocó aquí el variable\r",
+							"    //const respuestaJson = pm.response.json();\r",
+							"\r",
+							"    console.log(\"Imprimir el paìs: \", respuestaJson[0].country);\r",
+							"    console.log(\"Imprimir el paìs: \", respuestaJson[0].code);\r",
+							"    console.log(\"Imprimir el paìs: \", respuestaJson[0].confirmed);\r",
+							"    \r",
+							"    pm.expect(respuestaJson[0].confirmed).to.be.a(\"number\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar el texto'recovered' esta dentro de la respuesta\", ()=>{\r",
+							"    pm.expect(pm.response.text()).to.include(\"recovered\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar el texto'country' es texto\", ()=>{\r",
+							"    pm.expect(respuestaJson[0].deaths).to.a(\"number\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar el texto'confirmed' esta dentro de la respuesta\", ()=>{\r",
+							"    pm.expect(respuestaJson[0].confirmed).to.a(\"number\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://covid19-api.com/report/totals?date=2020-06-01&date-format=YYYY-MM-DD&format=json",
+					"protocol": "https",
+					"host": [
+						"covid19-api",
+						"com"
+					],
+					"path": [
+						"report",
+						"totals"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2020-06-01"
+						},
+						{
+							"key": "date-format",
+							"value": "YYYY-MM-DD"
+						},
+						{
+							"key": "format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post totales código 405",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validar que el status sea 200 de ok.\r",
+							"pm.test(\"test status code is 200\", function(){\r",
+							"    pm.response.to.have.status(405);\r",
+							"});\r",
+							"// Validar que el status es ok.\r",
+							"pm.test(\"test status code is not ok\", function(){\r",
+							"    pm.response.to.be.not.ok;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://covid19-api.com/report/totals?date=2020-06-01&date-format=YYYY-MM-DD&format=json",
+					"protocol": "https",
+					"host": [
+						"covid19-api",
+						"com"
+					],
+					"path": [
+						"report",
+						"totals"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2020-06-01"
+						},
+						{
+							"key": "date-format",
+							"value": "YYYY-MM-DD"
+						},
+						{
+							"key": "format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Options Totales 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validar que el status sea 200 de ok.\r",
+							"pm.test(\"test status code is 200\", function(){\r",
+							"    pm.response.to.have.status(405);\r",
+							"});\r",
+							"// Validar que el status es ok.\r",
+							"pm.test(\"test status code is not ok\", function(){\r",
+							"    pm.response.to.be.not.ok;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "https://covid19-api.com/report/totals?date=2020-06-01&date-format=YYYY-MM-DD&format=json",
+					"protocol": "https",
+					"host": [
+						"covid19-api",
+						"com"
+					],
+					"path": [
+						"report",
+						"totals"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2020-06-01"
+						},
+						{
+							"key": "date-format",
+							"value": "YYYY-MM-DD"
+						},
+						{
+							"key": "format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
