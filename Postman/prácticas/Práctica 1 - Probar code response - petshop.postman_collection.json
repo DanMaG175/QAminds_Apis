@@ -1,0 +1,1052 @@
+{
+	"info": {
+		"_postman_id": "a1ec62af-9173-4ff6-b2ea-49ff95048628",
+		"name": "Práctica 1 - Probar code response - petshop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PET",
+			"item": [
+				{
+					"name": "Get pet status pending",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Validar que el status es ok.\r",
+									"pm.test(\"test status code is ok\", function(){\r",
+									"    pm.response.to.be.ok;\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(200,204); //\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status=pending",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"pet",
+								"findByStatus"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "pending"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get pet status pending",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status=pending",
+									"protocol": "https",
+									"host": [
+										"petstore",
+										"swagger",
+										"io"
+									],
+									"path": [
+										"v2",
+										"pet",
+										"findByStatus"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "pending"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 25 Nov 2021 02:41:31 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, POST, DELETE, PUT"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Content-Type, api_key, Authorization"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.2.9.v20150224)"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1721117,\n        \"category\": {\n            \"id\": -67196814,\n            \"name\": \"dolore\"\n        },\n        \"name\": \"doggie\",\n        \"photoUrls\": [\n            \"incididunt quis deserunt\",\n            \"est cillum quis\"\n        ],\n        \"tags\": [\n            {\n                \"id\": 98465031,\n                \"name\": \"ea commodo\"\n            },\n            {\n                \"id\": -99302631,\n                \"name\": \"in\"\n            }\n        ],\n        \"status\": \"pending\"\n    },\n    {\n        \"id\": 54297730,\n        \"category\": {\n            \"id\": 4528095,\n            \"name\": \"ut\"\n        },\n        \"name\": \"doggie\",\n        \"photoUrls\": [\n            \"tempor in\",\n            \"Excepteur dolore\"\n        ],\n        \"tags\": [\n            {\n                \"id\": -60077591,\n                \"name\": \"velit in proident quis\"\n            },\n            {\n                \"id\": -93119424, \n                \"name\": \"consequat ea\"\n            }\n        ],\n        \"status\": \"pending\"\n    },\n    {\n        \"id\": 9223372000001096581,\n        \"category\": {\n            \"id\": 69740947,\n            \"name\": \"velit sit ullamco\"\n        },\n        \"name\": \"doggie\",\n        \"photoUrls\": [\n            \"Duis voluptate do\",\n            \"non enim\"\n        ],\n        \"tags\": [\n            {\n                \"id\": 24062348,\n                \"name\": \"do pariatur laborum\"\n            },\n            {\n                \"id\": -85957707,\n                \"name\": \"adipisicing in elit do\"\n            }\n        ],\n        \"status\": \"pending\"\n    },\n    {\n        \"id\": 2799412,\n        \"category\": {\n            \"id\": 19475553,\n            \"name\": \"nostrud cupidatat labore\"\n        },\n        \"name\": \"doggie\",\n        \"photoUrls\": [\n            \"culpa occaecat\",\n            \"ad incididunt\"\n        ],\n        \"tags\": [\n            {\n                \"id\": 47291519,\n                \"name\": \"consequat aute pariatur\"\n            },\n            {\n                \"id\": -53726990,\n                \"name\": \"Lorem enim consectetur\"\n            }\n        ],\n        \"status\": \"pending\"\n    },\n    {\n        \"id\": 9223372000001096814,\n        \"category\": {\n            \"id\": -68729199,\n            \"name\": \"qui eiusmod culpa proident\"\n        },\n        \"name\": \"doggie\",\n        \"photoUrls\": [\n            \"enim sit irure cillum\",\n            \"dolore dolor\"\n        ],\n        \"tags\": [\n            {\n                \"id\": 86322540,\n                \"name\": \"et dolore amet proident\"\n            },\n            {\n                \"id\": 13531309,\n                \"name\": \"magna eiusmod\"\n            }\n        ],\n        \"status\": \"pending\"\n    },\n    {\n        \"id\": 9223372000001096840,\n        \"category\": {\n            \"id\": -68729199,\n            \"name\": \"qui eiusmod culpa proident\"\n        },\n        \"name\": \"doggie\",\n        \"photoUrls\": [\n            \"enim sit irure cillum\",\n            \"dolore dolor\"\n        ],\n        \"tags\": [\n            {\n                \"id\": 86322540,\n                \"name\": \"et dolore amet proident\"\n            },\n            {\n                \"id\": 13531309,\n                \"name\": \"magna eiusmod\"\n            }\n        ],\n        \"status\": \"pending\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get pet status sold",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Validar que el status es ok.\r",
+									"pm.test(\"test status code is ok\", function(){\r",
+									"    pm.response.to.be.ok;\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(200,204); //\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status=sold",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"pet",
+								"findByStatus"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "sold"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get pet status Available",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/*\r",
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Validar que el status es ok.\r",
+									"pm.test(\"test status code is ok\", function(){\r",
+									"    pm.response.to.be.ok;\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(200,204); //\r",
+									"});\r",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status=available",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"pet",
+								"findByStatus"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "available"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post add new pet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"/*\r",
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Validar que el status es ok.\r",
+									"pm.test(\"test status code is ok\", function(){\r",
+									"    pm.response.to.be.ok;\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(200,204); //\r",
+									"});\r",
+									"*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"Dragon\"\r\n  },\r\n  \"name\": \"Smaug\",\r\n  \"photoUrls\": [\r\n    \"N/A\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"Super Ultra Mega Pet\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/pet",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"pet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post add new imagen error",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 415.\r",
+									"pm.test(\"test status code is 415\", function(){\r",
+									"    pm.response.to.have.status(415);\r",
+									"});\r",
+									"// Validar que el status es ok.\r",
+									"pm.test(\"test status code is ok\", function(){\r",
+									"    pm.expect(pm.response.status).to.be.eql(\"Unsupported Media Type\")\r",
+									"    pm.response.to.be.error;\r",
+									"    pm.response.to.be.not.ok;\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 415\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(415); //\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/pet/3/uploadImage",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"pet",
+								"3",
+								"uploadImage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post add new imagen",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Validar que el status es ok.\r",
+									"pm.test(\"test status code is ok\", function(){\r",
+									"    pm.response.to.be.ok;\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(200,204); //\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/dmarcialg/Documents/DanMG/Cursos/API postman/cachorro.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/pet/3/uploadImage",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"pet",
+								"3",
+								"uploadImage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update pet with error",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Validar que el status es ok.\r",
+									"pm.test(\"test status code is ok\", function(){\r",
+									"    pm.response.to.be.ok;\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(200,204); //\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/pet",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"pet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put update pet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Validar que el status es ok.\r",
+									"pm.test(\"test status code is ok\", function(){\r",
+									"    pm.response.to.be.ok;\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(200,204); //\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/pet",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"pet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post update form",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Validar que el status es ok.\r",
+									"pm.test(\"test status code is ok\", function(){\r",
+									"    pm.response.to.be.ok;\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(200,204); //\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete pet",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Validar que el status es ok.\r",
+									"pm.test(\"test status code is ok\", function(){\r",
+									"    pm.response.to.be.ok;\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(200,204); //\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/pet/9",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"pet",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post add new imagen error 415 unsuported",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 400.\r",
+									"pm.test(\"test status code is 400\", function(){\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"// Validar que el status es ok.\r",
+									"pm.test(\"test status code is ok\", function(){\r",
+									"    pm.expect(pm.response.status).to.be.eql(\"Bad Request\")\r",
+									"    pm.response.to.be.error;\r",
+									"    pm.response.to.be.badRequest;\r",
+									"    pm.response.to.be.not.ok;\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 400\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(400); //\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/pet/3/uploadImage ",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"pet",
+								"3",
+								"uploadImage "
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get Buscar datos por usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.body).not.null; //\r",
+									"});\r",
+									"pm.test(\"Validar campos cuando falla\", function(){\r",
+									"    pm.expect(pm.response.text()).to.include(\"code\", \"type\", \"message\");\r",
+									"});\r",
+									"pm.test(\"Validar campos cuando encuentra\", function(){\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\", \"username\", \"firstName\",\"lastName\",\"email\", \"password\",\"phone\",\"userStatus\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user/User100",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user",
+								"User100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post crear usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.body).not.null; //\r",
+									"});\r",
+									"pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+									"    pm.expect(pm.response.text()).to.include(\"code\", \"type\", \"message\");\r",
+									"});\r",
+									"/*pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+									"    pm.expect(pm.response.text()).to.include(\"sold\", \"teste\", \"string\",\"pending\",\"available\", \"connector_up\");\r",
+									"});*/ \r",
+									"//9223372036854775807 User10"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"username\": \"User10\",\r\n    \"firstName\": \"Dan\",\r\n    \"lastName\": \"MaG\",\r\n    \"email\": \"User100@algo.com\",\r\n    \"password\": \"User100\",\r\n    \"phone\": \"546879\",\r\n    \"userStatus\": 0\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put Actualiza usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.body).not.null; //\r",
+									"});\r",
+									"pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+									"    pm.expect(pm.response.text()).to.include(\"code\", \"type\", \"message\");\r",
+									"});\r",
+									"/*pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+									"    pm.expect(pm.response.text()).to.include(\"sold\", \"teste\", \"string\",\"pending\",\"available\", \"connector_up\");\r",
+									"});*/ "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"id\": 1,\r\n    \"username\": \"User100\",\r\n    \"firstName\": \"Dan desde postman\",\r\n    \"lastName\": \"MaG\",\r\n    \"email\": \"User100@algo.com\",\r\n    \"password\": \"User100\",\r\n    \"phone\": \"546879\",\r\n    \"userStatus\": 0\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user/User100",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user",
+								"User100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Crear usuario con arreglo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.body).not.null; //\r",
+									"});\r",
+									"pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+									"    pm.expect(pm.response.text()).to.include(\"code\", \"type\", \"message\");\r",
+									"});\r",
+									"/*pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+									"    pm.expect(pm.response.text()).to.include(\"sold\", \"teste\", \"string\",\"pending\",\"available\", \"connector_up\");\r",
+									"});*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"id\": 0,\r\n    \"username\": \"User2\",\r\n    \"firstName\": \"Dan\",\r\n    \"lastName\": \"MaG\",\r\n    \"email\": \"User100@algo.com\",\r\n    \"password\": \"User100\",\r\n    \"phone\": \"546879\",\r\n    \"userStatus\": 0\r\n  }\r\n    {\r\n    \"id\": 1,\r\n    \"username\": \"User3\",\r\n    \"firstName\": \"Dan\",\r\n    \"lastName\": \"MaG\",\r\n    \"email\": \"User100@algo.com\",\r\n    \"password\": \"User100\",\r\n    \"phone\": \"546879\",\r\n    \"userStatus\": 0\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/user/createWithArray",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"user",
+								"createWithArray"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Store",
+			"item": [
+				{
+					"name": "post Ordenar una mascota",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.body).not.null; //\r",
+									"});\r",
+									"pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\", \"petId\", \"quantity\", \"shipDate\", \"status\",\"complete\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"petId\": 0,\r\n  \"quantity\": 0,\r\n  \"shipDate\": \"2021-11-30T23:07:58.876Z\",\r\n  \"status\": \"placed\",\r\n  \"complete\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/store/order",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"store",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post Ordenar una mascota",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.body).not.null; //\r",
+									"});\r",
+									"pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\", \"petId\", \"quantity\", \"shipDate\", \"status\",\"complete\");\r",
+									"}); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/store/order/9223372000001093186",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"store",
+								"order",
+								"9223372000001093186"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Borrar orden de mascota",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.body).not.null; //\r",
+									"});\r",
+									"pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+									"    pm.expect(pm.response.text()).to.include(\"code\", \"type\", \"message\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/store/order/9223372000001093186",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"store",
+								"order",
+								"9223372000001093186"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Obtener inventario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validar que el status sea 200 de ok.\r",
+									"pm.test(\"test status code is 200\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// Diferente forma de definir funcion\r",
+									"pm.test(\"test status code is equal to 200\", () => {\r",
+									"    pm.expect(pm.response.body).not.null; //\r",
+									"});\r",
+									"pm.test(\"Validar que respuesta tiene todos los campos\", function(){\r",
+									"    pm.expect(pm.response.text()).to.include(\"sold\", \"teste\", \"string\",\"pending\",\"available\", \"connector_up\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/store/inventory",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"store",
+								"inventory"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

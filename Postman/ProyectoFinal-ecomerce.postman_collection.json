@@ -849,7 +849,7 @@
 							"    pm.request.to.not.have.header('Authorization');\r",
 							"});\r",
 							"pm.test(\"Body response incluye campo code:UNAUTHORIZED \", ()=>{\r",
-							"    pm.expect(pm.response.text()).to.include('error','code:UNAUTHORIZED',);\r",
+							"    pm.expect(pm.response.text()).to.include('error','code:UNAUTHORIZED');\r",
 							"}); "
 						],
 						"type": "text/javascript"

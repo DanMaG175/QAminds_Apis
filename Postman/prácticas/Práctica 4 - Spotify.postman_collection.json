@@ -1,0 +1,314 @@
+{
+	"info": {
+		"_postman_id": "a09894a1-b85e-43d2-af8a-9522dd766c94",
+		"name": "Práctica 4 - Spotify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Álbum",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQCjy9oBpYovPDik22lLWDq_GZQISCdcol8-979mvEAdxIwf1oG0uSWOe_-jHtR5qdNJvSS6ZAXjnJA5PZ3yvJ1Ls27P7K-tu5GZH2fb6HxegYguJz6xbMCHGuCrboYY_veyYeZhJKSBNikbnxjeLhraVqalO5GwfxOp59X7g2M4QdvSbJnO3DCgU07eZkjFyJ6xFPM7zLoDxk_yRbSBl08r7hROA43-_1sO0-rEbx0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/albums/7ydMeYrv8bFFRkkHepoJM4/tracks",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"albums",
+						"7ydMeYrv8bFFRkkHepoJM4",
+						"tracks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Información usuario",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQCkiqrsFWlQn4Ti6NODu9oNuu7Pig0QkkdkW_fpD27dOkWajYzx4Mvn53qQJ4idTJsfU5tKWnRCI0Z2yPXvylu4Ja3XTUVILnBxbuSVJ2DVskujS13YhgBYY09KnVJTa3Hmo7-0vUTL2DKaD5KCRgtOB0bwfy9gfZ5h2KGGD6JyGuq8UEMgS1diDBQojFDVA4WVsZbn_eKg4nyUy2b8rk6WnXmhtY667MUHfrMkosiej829dH6s-b_PI4ttIfYMzVlkM4KFMaEqr32cc-hixTP0TLxTfIJLiXn-",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/me",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Recomendaciones personalizadas",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQCkiqrsFWlQn4Ti6NODu9oNuu7Pig0QkkdkW_fpD27dOkWajYzx4Mvn53qQJ4idTJsfU5tKWnRCI0Z2yPXvylu4Ja3XTUVILnBxbuSVJ2DVskujS13YhgBYY09KnVJTa3Hmo7-0vUTL2DKaD5KCRgtOB0bwfy9gfZ5h2KGGD6JyGuq8UEMgS1diDBQojFDVA4WVsZbn_eKg4nyUy2b8rk6WnXmhtY667MUHfrMkosiej829dH6s-b_PI4ttIfYMzVlkM4KFMaEqr32cc-hixTP0TLxTfIJLiXn-",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/views/personalized-recommendations?timestamp=2021-11-29T19%3A53%3A12.470Z&platform=web&content_limit=10&limit=20&types=album%2Cplaylist%2Cartist%2Cshow%2Cstation%2Cepisode&image_style=gradient_overlay&include_external=audio&country=MX&locale=es&market=from_token",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"views",
+						"personalized-recommendations"
+					],
+					"query": [
+						{
+							"key": "timestamp",
+							"value": "2021-11-29T19%3A53%3A12.470Z"
+						},
+						{
+							"key": "platform",
+							"value": "web"
+						},
+						{
+							"key": "content_limit",
+							"value": "10"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						},
+						{
+							"key": "types",
+							"value": "album%2Cplaylist%2Cartist%2Cshow%2Cstation%2Cepisode"
+						},
+						{
+							"key": "image_style",
+							"value": "gradient_overlay"
+						},
+						{
+							"key": "include_external",
+							"value": "audio"
+						},
+						{
+							"key": "country",
+							"value": "MX"
+						},
+						{
+							"key": "locale",
+							"value": "es"
+						},
+						{
+							"key": "market",
+							"value": "from_token"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Playlist",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQCkiqrsFWlQn4Ti6NODu9oNuu7Pig0QkkdkW_fpD27dOkWajYzx4Mvn53qQJ4idTJsfU5tKWnRCI0Z2yPXvylu4Ja3XTUVILnBxbuSVJ2DVskujS13YhgBYY09KnVJTa3Hmo7-0vUTL2DKaD5KCRgtOB0bwfy9gfZ5h2KGGD6JyGuq8UEMgS1diDBQojFDVA4WVsZbn_eKg4nyUy2b8rk6WnXmhtY667MUHfrMkosiej829dH6s-b_PI4ttIfYMzVlkM4KFMaEqr32cc-hixTP0TLxTfIJLiXn-",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/playlists/37i9dQZF1DXdPec7aLTmlC/tracks",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"playlists",
+						"37i9dQZF1DXdPec7aLTmlC",
+						"tracks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQCkiqrsFWlQn4Ti6NODu9oNuu7Pig0QkkdkW_fpD27dOkWajYzx4Mvn53qQJ4idTJsfU5tKWnRCI0Z2yPXvylu4Ja3XTUVILnBxbuSVJ2DVskujS13YhgBYY09KnVJTa3Hmo7-0vUTL2DKaD5KCRgtOB0bwfy9gfZ5h2KGGD6JyGuq8UEMgS1diDBQojFDVA4WVsZbn_eKg4nyUy2b8rk6WnXmhtY667MUHfrMkosiej829dH6s-b_PI4ttIfYMzVlkM4KFMaEqr32cc-hixTP0TLxTfIJLiXn-",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/users/spotify",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"users",
+						"spotify"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Playlist",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQCkiqrsFWlQn4Ti6NODu9oNuu7Pig0QkkdkW_fpD27dOkWajYzx4Mvn53qQJ4idTJsfU5tKWnRCI0Z2yPXvylu4Ja3XTUVILnBxbuSVJ2DVskujS13YhgBYY09KnVJTa3Hmo7-0vUTL2DKaD5KCRgtOB0bwfy9gfZ5h2KGGD6JyGuq8UEMgS1diDBQojFDVA4WVsZbn_eKg4nyUy2b8rk6WnXmhtY667MUHfrMkosiej829dH6s-b_PI4ttIfYMzVlkM4KFMaEqr32cc-hixTP0TLxTfIJLiXn-",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://open.spotify.com/playlist/37i9dQZF1DXdPec7aLTmlC",
+					"protocol": "https",
+					"host": [
+						"open",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"playlist",
+						"37i9dQZF1DXdPec7aLTmlC"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Token spotify app",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const client_id = 'e81e03378bc04feba8e0cae7c3ea1954';\r",
+							"var client_secret = '271d2114235e4ae7befefcfecc2604f3'; \r",
+							"\r",
+							"let encodeKeys = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(client_id + \":\" + client_secret));\r",
+							"//let encodeKeys = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(client_id + \":\" + client_secret));\r",
+							"console.log(\"Base64\".encodeKeys);\r",
+							"\r",
+							"pm.environment.set(\"Base64\",encodeKeys);\r",
+							"//pm.globals.set(\"key variable global\",\"valor\")\r",
+							"//pm.collectionVariables.set(\"nombre Variable collection\",\"valor\")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{Base64}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{base_url}}/api/token",
+					"protocol": "https",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

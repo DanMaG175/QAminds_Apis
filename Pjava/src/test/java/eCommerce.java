@@ -18,7 +18,6 @@ public class eCommerce {
     static private String account_id;
     static private String uuid;
     static private String idAddress;
-    static private String article0;
 
     //función para crear un token
     private String obtenerToken(){
@@ -362,9 +361,6 @@ public class eCommerce {
         assertEquals(200, response.getStatusCode());
         assertNotNull(body_response);
         assertTrue(body_response.contains("{\"data\":{\"added\":"));
-
-        article0 = JsonPath.read(body_response,"$.added[0]");
-        System.out.println("Articulo agregado: " + article0);
     }
     @Test
     public void t19_obtener_articulo_favorito(){
