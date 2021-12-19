@@ -4,6 +4,7 @@ import io.restassured.response.Response;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import java.util.Base64;
 
 import static io.restassured.RestAssured.*;
 import static org.junit.Assert.*;
@@ -16,11 +17,32 @@ public class eCommerce {
     static private String access_token;
     static private String account_id;
     static private String uuid;
-
+    static private String idAddress;
     static private String article0;
+
+    //función para crear un token
+    private String obtenerToken(){
+        RestAssured.baseURI = String.format("https://%s/nga/api/v1.1/private/accounts",url_base);
+        Response response = given()
+                .log().all()
+                .queryParam("lang","es")
+                .auth().preemptive().basic("danmgapi@mailinator.com", "DanApiqa")
+                .post();
+        String body_response = response.getBody().asString();
+        System.out.println("Body response: " + body_response);
+
+        access_token = JsonPath.read(body_response,"$.access_token");
+        //account_id = JsonPath.read(body_response,"$.account.account_id");
+        uuid = JsonPath.read(body_response,"$.account.uuid");
+        String uuidAccess = uuid + ":" + access_token;
+        String uuidToken = Base64.getEncoder().encodeToString(uuidAccess.getBytes());
+
+        return uuidToken;
+    }
 
     @Test
     public void t01_obtener_categorias(){
+
         RestAssured.baseURI = String.format("https://%s/nga/api/v1/public/categories/insert?lang=es",url_base);
         Response response = given()
                 .log()
@@ -163,28 +185,144 @@ public class eCommerce {
         assertNotNull(body_response);
         assertTrue(body_response.contains("{\"error\":{\"code\":\"UNAUTHORIZED\"}}"));
     }
-    /* + + + + + Están mandando código 415
-    415 Unsupported Media Type (en-US) El formato multimedia de los datos solicitados no está soportado por el servidor,
-     por lo cual el servidor rechaza la solicitud. + + + + + +
     @Test
     public void t10_obtener_credenciales(){
+
         //https://{{url_base}}/nga/api/v1/api/hal/{{uuid}}/realtime/credentials
+        //String newToken = obtenerToken();
         RestAssured.baseURI = String.format("https://%s/nga/api/v1/api/hal/%s/realtime/credentials",url_base,uuid);
         Response response = given()
                 .log().all()
                 .header("Authorization","tag:scmcoord.com,2013:api " + access_token)
+                .header("Content-Type","application/json; charset=utf-8")
                 .post();
-        //String body_response = response.getBody().asString();
-        //System.out.println("Body response: " + body_response);
+        String body_response = response.getBody().asString();
+        System.out.println("Body response: " + body_response);
 
         assertEquals(200, response.getStatusCode());
         assertNotNull(response.getBody());
+        assertTrue(body_response.contains("{\"_links\":{\"self\":{\"href\":" +
+                "\"http://segundamanomx.messaging.advgo.net/api/hal/"+uuid+"/realtime/credentials\"}},\"realTimeUser\":" +
+                "{\"id\":\"" + uuid + "\",\"xmppJid\":\"" + uuid + "_segundamanomx@xmpp.messaging.advgo.net"));
+        assertTrue(body_response.contains("\"realTimeUser\":{\"id\":\""+ uuid +"\",\"xmppJid\":" +
+                "\""+ uuid + "_segundamanomx@xmpp.messaging.advgo.net\","));
+    }
+    @Test
+    public void t11_crear_direccion_nueva(){
+        //https://{{url_base}}/addresses/v1/create
+        RestAssured.baseURI = String.format("https://%s/addresses/v1/create",url_base);
+        Response response = given()
+                .log().all()
+                .auth().preemptive().basic(uuid,access_token)
+                .header("Content-Type","application/x-www-form-urlencoded")
+                .formParam("contact","Prueba IntelliJ")
+                .formParam("phone","5563249875")
+                .formParam("rfc","FAFI881231JKL")
+                .formParam("zipCode","12345")
+                .formParam("exteriorInfo","Calle Intellli 2021")
+                .formParam("interiorInfo","D12")
+                .formParam("region","3")
+                .formParam("municipality","36")
+                .formParam("area","34854")
+                .formParam("alias","Desde IntelliJ")
+                .post();
+        String body_response = response.getBody().asString();
+        System.out.println("Body response: " + body_response);
 
-    }*/
-    /*
-    * Pruebas de crud dirección
-    * pruebas de crud anuncio
-    * */
+        assertEquals(201, response.getStatusCode());
+        assertNotNull(body_response);
+        assertTrue(body_response.contains("addressID\""));
+        idAddress = JsonPath.read(body_response,"$.addressID");
+        System.out.println("address: " + idAddress);
+    }
+    @Test
+    public void t12_ver_direcciones(){
+        RestAssured.baseURI = String.format("https://%s/addresses/v1/get",url_base);
+        Response response = given()
+                .log().all()
+                .auth().preemptive().basic(uuid,access_token)
+                .get();
+        String body_response = response.getBody().asString();
+        System.out.println("Body response: " + body_response);
+        System.out.println("address: " + idAddress);
+
+        assertEquals(200, response.getStatusCode());
+        assertNotNull(body_response);
+        assertTrue(body_response.contains("addresses"));
+        assertTrue(body_response.contains(idAddress));
+    }
+    @Test
+    public void t13_borrar_direcciones(){
+    //https://{{url_base}}/addresses/v1/delete/{{idAddress}}
+    RestAssured.baseURI = String.format("https://%s/addresses/v1/delete/%s",url_base,idAddress);
+    Response response = given()
+                .log().all()
+                .auth().preemptive().basic(uuid,access_token)
+                .delete();
+        String body_response = response.getBody().asString();
+        System.out.println("Body response: " + body_response);
+
+        assertEquals(200, response.getStatusCode());
+        assertNotNull(body_response);
+        assertTrue(body_response.contains("{\"message\":\"" + idAddress + " deleted correctly\"}"));
+    }
+    @Test
+    public void t14_ver_direcciones_metodo_no_permitido(){
+        RestAssured.baseURI = String.format("https://%s/addresses/v1/get",url_base);
+        Response response = given()
+                .log().all()
+                .auth().preemptive().basic(uuid,access_token)
+                .patch();
+        String body_response = response.getBody().asString();
+        System.out.println("Body response: " + body_response);
+
+        assertEquals(405, response.getStatusCode());
+        assertNotNull(body_response);
+        assertTrue(body_response.contains("Method Not Allowed"));
+    }
+    @Test
+    public void t15_crear_anuncio_nuevo(){
+    //https://{{url_base}}/v2/accounts/{{uuid}}/up
+        String newToken = obtenerToken();
+        RestAssured.baseURI = String.format("https://%s/v2/accounts/%s/up", url_base, uuid);
+        String bodyRequest = "{\"category\":\"8082\",\"subject\":\"PC laptop Reparacion\",\"body\":\"Se revisa y repara todo tipo de equipo\",\"" +
+                "price\":\"500\",\"region\":\"17\",\"municipality\":\"699\",\"area\":\"177439\",\"phone_hidden\":\"false\",\"" +
+                "show_phone\":\"true\",\"contact_phone\":\"8855123456\"}";
+        Response response = given()
+                .log().all()
+                .header("Authorization", "Basic " + newToken)
+                .header("Accept", "application/json, text/plain, *")
+                .header("Content-Type", "application/json")
+                .header("X-Source", "PHOENIX_DESKTOP")
+                .body(bodyRequest)
+                .post();
+        String body_response = response.getBody().asString();
+        System.out.println("Request: " + bodyRequest);
+        System.out.println("Body response: " + body_response);
+
+        assertEquals(200, response.getStatusCode());
+        assertNotNull(body_response);
+        assertTrue(body_response.contains("ad_id"));
+    }
+    @Test
+    public void t16_ver_anuncios_pendientes(){
+        //https://{{url_base}}/nga/api/v1/{{account_id}}/klfst?status=pending
+        //String newToken = obtenerToken();
+        RestAssured.baseURI = String.format("https://%s/nga/api/v1%s/klfst?status=pending", url_base, account_id);
+        Response response = given()
+                .log().all()
+                .header("Authorization", "tag:scmcoord.com,2013:api " + access_token)
+                .queryParam("status", "pending")
+                .get();
+        String body_response = response.getBody().asString();
+        System.out.println("Body response: " + body_response);
+        System.out.println("accessToken: " + access_token);
+        System.out.println("account: " + account_id);
+        System.out.println("uuid: " + uuid);
+        assertEquals(200, response.getStatusCode());
+        assertNotNull(body_response);
+        assertTrue(body_response.contains("ad_id"));
+    }
     @Test
     public void t17_recomendar_precio_auto(){
         //https://{{url_base}}/price-recommender/v1/public/recommend/
@@ -226,9 +364,10 @@ public class eCommerce {
         assertTrue(body_response.contains("{\"data\":{\"added\":"));
 
         article0 = JsonPath.read(body_response,"$.added[0]");
+        System.out.println("Articulo agregado: " + article0);
     }
     @Test
-    public void t19_obtener_articulo_a_favorito(){
+    public void t19_obtener_articulo_favorito(){
         //https://{{url_base}}/favorites/v1/private/accounts/{{uuid}}
         RestAssured.baseURI = String.format("https://%s/favorites/v1/private/accounts/%s",url_base,uuid);
         Response response = given()
@@ -242,4 +381,24 @@ public class eCommerce {
         assertNotNull(body_response);
         assertTrue(body_response.contains("{\"data\":{\"name\":\"Favoritos\",\"list_ids\":"));
     }
+    @Test
+    public void t20_cambiar_password(){
+        //String newToken = obtenerToken();
+        RestAssured.baseURI = String.format("https://%s/nga/api/v1/%s",url_base,account_id);
+        String bodyRequest = "{\"account\":{\"password\":\"DanApiqa\"}}";
+        Response response = given()
+                .log().all()
+                .header("Authorization","tag:scmcoord.com,2013:api " + access_token)
+                .header("Content-Type","application/json")
+                .header("Origin","https://www.segundamano.mx")
+                .body(bodyRequest)
+                .patch();
+        String body_response = response.getBody().asString();
+        System.out.println("Body response: " + body_response);
+
+        assertEquals(200, response.getStatusCode());
+        assertNotNull(body_response);
+        assertTrue(body_response.contains("account"));
+    }
 }
+
